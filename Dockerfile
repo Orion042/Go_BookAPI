@@ -8,6 +8,10 @@ COPY ./go.mod .
 
 RUN go mod download
 
+COPY ./model.go .
+
+COPY ./controller.go .
+
 COPY ./main.go .
 
-CMD ["go", "run", "main.go"]
+CMD ["go", "run", "main.go", "model.go", "controller.go"]
