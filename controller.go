@@ -17,15 +17,19 @@ func SetupRoutes(engine *gin.Engine, db *gorm.DB) {
 		GetAllBooks(c, db)
 	})
 
-	engine.GET("/book/:id", func(c *gin.Context) {
+	engine.GET("/book/id/:id", func(c *gin.Context) {
 		GetBook(c, db)
 	})
 
-	engine.PUT("/book/:id", func(c *gin.Context) {
+	engine.GET("/book/title/:title", func(c *gin.Context) {
+		GetBookFromTitle(c, db)
+	})
+
+	engine.PUT("/book/id/:id", func(c *gin.Context) {
 		UpdateBook(c, db)
 	})
 
-	engine.DELETE("/book/:id", func(c *gin.Context) {
+	engine.DELETE("/book/id/:id", func(c *gin.Context) {
 		DeleteBook(c, db)
 	})
 }
@@ -55,6 +59,16 @@ func GetBook(c *gin.Context, db *gorm.DB) {
 	id := c.Param("id")
 
 	if err := db.First(&book, id).Error; err != nil {
+		fmt.Println(err)
+	}
+	c.JSON(http.StatusOK, book)
+}
+
+func GetBookFromTitle(c *gin.Context, db *gorm.DB) {
+	book := Book{}
+	title := c.Param("title")
+
+	if err := db.Where("title = ?", title).First(&book).Error; err != nil {
 		fmt.Println(err)
 	}
 	c.JSON(http.StatusOK, book)
