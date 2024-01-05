@@ -1,0 +1,164 @@
+openapi: "3.0.3"
+
+info:
+  title: "Book API"
+  version: "1.0.0"
+
+tags:
+  - name: "books"
+    description: "全保存データ取得"
+  - name: "book"
+    description: "書籍情報の保存"
+  - name: "book/id/{id}"
+    description: "idに該当する書籍に関する処理"
+  - name: "book/title/{title}"
+    description: "タイトルに該当する書籍に関する処理"
+
+paths:
+  "/books/":
+    get:
+      summary: "全保存データ取得"
+      tags: ["books"]
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              example:
+                - ID: 1
+                  CreatedAt: "2024-01-01T18:05:47.157Z"
+                  UpdatedAt: "2024-01-01T18:05:47.157Z"
+                  DeletedAt: null
+                  title: "BookTitle1"
+                  author: "Author1"
+                - ID: 2
+                  CreatedAt: "2024-01-01T18:05:54.47Z"
+                  UpdatedAt: "2024-01-01T18:05:54.47Z"
+                  DeletedAt: null
+                  title: "BookTitle2"
+                  author: "Author2"
+        "404":
+          description: "404 page not found"
+  "/book/":
+    post:
+      summary: "書籍情報の保存"
+      tags: ["book"]
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+      requestBody:
+        description: "登録したい書籍情報"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  title:
+                    type: "string"
+                    format: "string"
+                  author:
+                    type: "string"
+                    format: "string"
+  "/book/id/{id}":
+    get:
+      summary: "書籍情報を取得"
+      tags: ["book/id/{id}"]
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ID:
+                    type: "integer"
+                    format: "int64"
+                  CreatedAt:
+                    type: "string"
+                    format: "date-time"
+                  UpdatedAt:
+                    type: "string"
+                    format: "date-time"
+                  DeletedAt:
+                    type: "string"
+                    format: "date-time"
+                  title:
+                    type: "string"
+                    format: "string"
+                  author:
+                    type: "string"
+                    format: "string"
+    put:
+      summary: "DBに書籍情報を更新"
+      tags: ["book/id/{id}"]
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+      requestBody:
+        description: "更新したい書籍情報"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  ID:
+                    type: "integer"
+                    format: "int64"
+                  title:
+                    type: "string"
+                    format: "string"
+                  author:
+                    type: "string"
+                    format: "string"
+    delete:
+      summary: "書籍情報の削除"
+      tags: ["book/id/{id}"]
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+      requestBody:
+        description: "削除したい書籍情報"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  ID:
+                    type: "integer"
+                    format: "int64"
+  "/book/title/{title}":
+    get:
+      summary: "タイトルに該当する書籍を取得"
+      tags: ["book/title/{title}"]
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                properties:
+                    ID:
+                      type: "integer"
+                      format: "int64"
+                    CreatedAt:
+                      type: "string"
+                      format: "date-time"
+                    UpdatedAt:
+                      type: "string"
+                      format: "date-time"
+                    DeletedAt:
+                      type: "string"
+                      format: "date-time"
+                    title:
+                      type: "string"
+                      format: "string"
+                    author:
+                      type: "string"
+                      format: "string"
